@@ -37,7 +37,7 @@ public class PlayerMovement : Movement
     }
 
     protected virtual void Move(Transform objectMove) =>
-        objectMove.Translate(Vector3.up * this.speed * Time.fixedDeltaTime);
+        objectMove.Translate(Vector3.up * this.speed * Time.deltaTime);
 
     protected override void Move() { /*FOR OVERRIDE*/ }
 }

@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class EnemyHarmImpact : EnemyImpact
 {
-    protected override void Affect(Transform objectAffect)
-    {
-        Debug.LogWarning("GAME OVER");
-    }
+    protected override void Affect(Transform objectAffect) =>
+        GameController.Instance.LoseGame();
 }
