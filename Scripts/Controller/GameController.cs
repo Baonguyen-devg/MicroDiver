@@ -8,10 +8,12 @@ public class GameController : AutoMonoBehaviour
     public static GameController Instance => instance;
 
     [SerializeField] private int lengthRequest = default;
-[SerializeField] private int deepRequest = default;
+    public int LengthRequest => lengthRequest;
 
-[SerializeField] private int lengthPresent = default;
-[SerializeField] private int deepPresent = default;
+    [SerializeField] private int deepRequest = default;
+
+    [SerializeField] private int lengthPresent = default;
+    [SerializeField] private float deepPresent = default;
 
     protected override void LoadComponentInAwakeBefore()
     {
@@ -33,10 +35,10 @@ public class GameController : AutoMonoBehaviour
 
     }
 
-    public virtual void UpdateDeep(int number)
+    public virtual void UpdateDeep(float number)
     {
-        this.deepPresent = number;
-        UIController.Instance.ChangeDeepText(this.deepPresent.ToString());
+        
+        UIController.Instance.ChangeDeep(number);
     }
 
     public virtual void LoseGame()
