@@ -41,6 +41,12 @@ public class GameController : AutoMonoBehaviour
 
     public virtual void LoseGame()
     {
+        StartCoroutine(this.Lose());
+    }
+
+    private IEnumerator Lose()
+    {
+        yield return new WaitForSeconds(0.5f);
         Time.timeScale = 0;
         UIController.Instance.Lose();
     }
