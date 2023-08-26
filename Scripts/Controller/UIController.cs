@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UIController : AutoMonoBehaviour
 {
@@ -9,9 +10,8 @@ public class UIController : AutoMonoBehaviour
     public static UIController Instance => instance;
 
     [SerializeField] private GameObject pauseGameUI;
-    [SerializeField] private GameObject winGameUI;
-    private void LoadWinGameUI() =>
-        this.winGameUI = transform.Find("Win_Game").gameObject;
+    private void LoadPauseGameUI() =>
+       this.pauseGameUI = transform.Find("Pause_Game").gameObject;
 
     [SerializeField] private GameObject loseGameUI;
     private void LoadLoseGameUI() =>
@@ -40,10 +40,15 @@ public class UIController : AutoMonoBehaviour
         base.LoadComponent();
         this.LoadLengthText();
         this.LoadLoseGameUI();
-        this.LoadWinGameUI();
+        this.LoadPauseGameUI();
         this.LoadHeightScaleBox();
         this.LoadPointDeepPresent();
         this.LoadPointDeepMax();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKey(KeyCode.Escape)) this.Pause();
     }
 
     protected override void LoadComponentInAwakeBefore()
@@ -67,8 +72,27 @@ public class UIController : AutoMonoBehaviour
     public virtual void ChangeLengthText(string textNumber) => 
         this.lenghtText.text = textNumber;
 
-    public virtual void Win() => this.winGameUI.SetActive(true);
+    public virtual void Pause() {
+        this.pauseGameUI.SetActive(true);
+        Time.timeScale = 0;
+    }
 
     public virtual void Lose() => this.loseGameUI.SetActive(true);
+
+    public virtual void Continue() => Time.timeScale = 1;
+
+    public virtual void PlayAgain()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public virtual void Menu()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+    }
+
+    public virtual void PlayClickAudio() => SFXSpawner.Instance.PlaySound("Click_Button_Audio");
 }
 

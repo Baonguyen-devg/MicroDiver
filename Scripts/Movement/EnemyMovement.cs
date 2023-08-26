@@ -14,5 +14,5 @@ public class EnemyMovement : Movement
     }
 
     protected override void Move() =>
-        transform.parent.Translate(this.direction * this.speed * Time.fixedDeltaTime);
+        transform.parent.Translate(this.direction * this.speed * Time.deltaTime);
 }

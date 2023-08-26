@@ -17,11 +17,7 @@ public class GameController : AutoMonoBehaviour
     {
         base.LoadComponentInAwakeBefore();
         GameController.instance = this;
-    }
-
-    private void Update()
-    {
-        if (this.maxDeepPresent >= this.deepRequest) this.WinGame();
+        Application.targetFrameRate = 60;
     }
 
     public virtual void IncreaseLength(int number)
@@ -50,9 +46,9 @@ public class GameController : AutoMonoBehaviour
         UIController.Instance.Lose();
     }
 
-    public virtual void WinGame()
+    public virtual void PauseGame()
     {
         Time.timeScale = 0;
-        UIController.Instance.Win();
+        UIController.Instance.Pause();
     }
 }
