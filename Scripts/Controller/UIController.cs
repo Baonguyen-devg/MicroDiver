@@ -21,13 +21,11 @@ public class UIController : AutoMonoBehaviour
     private void LoadLengthText() =>
         this.lenghtText = transform.Find("Game").Find("Length_Text").GetComponent<Text>();
 
-    [SerializeField] private Text maxLenghtText;
-    private void LoadMaxLengthText() =>
-        this.maxLenghtText = transform.Find("Game").Find("Max_Length_Text").GetComponent<Text>();
+    public float rateDeep = default;
 
     [SerializeField] private float heightScaleBox = default;
     private void LoadHeightScaleBox() =>
-        this.heightScaleBox = transform.Find("Game").Find("Deep").Find("Scale_Box").GetComponent<RectTransform>().rect.height;
+        this.heightScaleBox = transform.Find("Game").Find("Deep").Find("Scale_Box_Height_1").GetComponent<RectTransform>().rect.height;
 
     [SerializeField] private RectTransform pointDeepPresent;
     private void LoadPointDeepPresent() =>
@@ -43,7 +41,6 @@ public class UIController : AutoMonoBehaviour
         this.LoadLengthText();
         this.LoadLoseGameUI();
         this.LoadWinGameUI();
-        this.LoadMaxLengthText();
         this.LoadHeightScaleBox();
         this.LoadPointDeepPresent();
         this.LoadPointDeepMax();
@@ -53,21 +50,22 @@ public class UIController : AutoMonoBehaviour
     {
         base.LoadComponentInAwakeBefore();
         UIController.instance = this;
-        this.ChangeMaxLengthText("/" + GameController.Instance.LengthRequest.ToString());
     }
 
     public virtual void ChangeDeep(float rateDeep)
     {
+        this.rateDeep = rateDeep;
         Vector2 newPositon = this.pointDeepPresent.anchoredPosition;
         newPositon.y = -rateDeep * this.heightScaleBox;
         this.pointDeepPresent.anchoredPosition = newPositon;
+
+        Vector2 newMaxPositon = this.pointDeepMax.anchoredPosition;
+        newMaxPositon.y = - GameController.Instance.MaxDeepPresent * this.heightScaleBox;
+        this.pointDeepMax.anchoredPosition = newMaxPositon;
     }
 
     public virtual void ChangeLengthText(string textNumber) => 
         this.lenghtText.text = textNumber;
-
-    public virtual void ChangeMaxLengthText(string textNumber) =>
-       this.maxLenghtText.text = textNumber;
 
     public virtual void Win() => this.winGameUI.SetActive(true);
 

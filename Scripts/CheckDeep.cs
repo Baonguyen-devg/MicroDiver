@@ -25,13 +25,14 @@ public class CheckDeep : AutoMonoBehaviour
     protected override void LoadComponentInAwakeBefore()
     {
         base.LoadComponentInAwakeBefore();
-        this.firstDeep = Mathf.Abs(this.listModel[0].localPosition.y);
-        this.maxDeep = Mathf.Abs((int)this.bottomSea.localPosition.y);
+        this.firstDeep = Mathf.Abs(this.listModel[0].localPosition.y) + 5;
+        this.maxDeep = Mathf.Abs((int)this.bottomSea.localPosition.y) + 5;
     }
 
     private void Update()
     {
         float deep = Mathf.Abs(this.listModel[0].localPosition.y - this.firstDeep) / this.maxDeep;
+        deep = Mathf.Clamp(deep, 0, 1);
         GameController.Instance.UpdateDeep(deep);
     }
 }

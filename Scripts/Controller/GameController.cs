@@ -7,13 +7,11 @@ public class GameController : AutoMonoBehaviour
     private static GameController instance;
     public static GameController Instance => instance;
 
-    [SerializeField] private int lengthRequest = default;
-    public int LengthRequest => lengthRequest;
-
-    [SerializeField] private int deepRequest = default;
+    [SerializeField] private float deepRequest = 1f;
 
     [SerializeField] private int lengthPresent = default;
-    [SerializeField] private float deepPresent = default;
+    [SerializeField] private float maxDeepPresent = default;
+    public float MaxDeepPresent => this.maxDeepPresent;
 
     protected override void LoadComponentInAwakeBefore()
     {
@@ -23,8 +21,7 @@ public class GameController : AutoMonoBehaviour
 
     private void Update()
     {
-        if (this.lengthPresent >= this.lengthRequest && this.deepPresent >= this.deepRequest)
-            this.WinGame();
+        if (this.maxDeepPresent >= this.deepRequest) this.WinGame();
     }
 
     public virtual void IncreaseLength(int number)
@@ -37,7 +34,7 @@ public class GameController : AutoMonoBehaviour
 
     public virtual void UpdateDeep(float number)
     {
-        
+        this.maxDeepPresent = Mathf.Max(this.maxDeepPresent, number);
         UIController.Instance.ChangeDeep(number);
     }
 
