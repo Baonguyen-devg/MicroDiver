@@ -1,17 +1,18 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PointEnemySpawner : AutoMonoBehaviour, ISubject
 {
-    private const float default_Rate_Time_Spawn = 2f;
+    private const float DEFAULT_RATE_TIME_SPAWN = 2f;
 
     [SerializeField] private List<Transform> listPrefabs;
+    public List<Transform> ListPrefabs => this.listPrefabs;
     private void LoadListPrefas() =>
         this.listPrefabs = gameObject.GetComponent<ListPrefab>().Prefabs;
-    public List<Transform> ListPrefabs => this.listPrefabs;
 
-    [SerializeField] private float rateTimeSpawn = default_Rate_Time_Spawn;
-    [SerializeField] private float timeCountDown = default_Rate_Time_Spawn;
+    [SerializeField] private float rateTimeSpawn = DEFAULT_RATE_TIME_SPAWN;
+    [SerializeField] private float timeCountDown = DEFAULT_RATE_TIME_SPAWN;
 
     [SerializeField] private List<IObserver> observers = new List<IObserver>();
 
@@ -20,7 +21,8 @@ public class PointEnemySpawner : AutoMonoBehaviour, ISubject
     private void Update()
     {
         this.timeCountDown = this.timeCountDown - Time.deltaTime;
-        if (this.timeCountDown > 0) return;
+        Predicate<float> predicate = (x) => x > 0;
+        if (predicate(this.timeCountDown)) return;
         this.Notify();
     }
 

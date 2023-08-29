@@ -3,13 +3,13 @@ using UnityEngine;
 
 public class PlayerMovement : Movement
 {
-    private const float default_Distance_Body = 1f;
+    private const float DEFAULT_DISTANCE_BODY = 1f;
 
     [SerializeField] private List<Transform> listModel;
     private void LoadHeadPlayer() =>
         this.listModel = transform.parent.Find("Model")?.GetComponent<ListPrefab>().Prefabs;
 
-    [SerializeField] private float distanceBody = default_Distance_Body;
+    [SerializeField] private float distanceBody = DEFAULT_DISTANCE_BODY;
 
     protected override void LoadComponent() => this.LoadHeadPlayer();
 

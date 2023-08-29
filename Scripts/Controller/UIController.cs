@@ -1,47 +1,48 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public partial class UIController : AutoMonoBehaviour
 {
+    private const float DEFAULT_RATE_DEEP = 0;
+
     private static UIController instance;
     public static UIController Instance => instance;
 
-    private float rateDeep = default;
+    private float rateDeep = DEFAULT_RATE_DEEP;
     public float RateDeep => this.rateDeep;
 
+    /*Begin predicatedload of components*/
+    [SerializeField] private List<Action> predicateLoad;
+
     [SerializeField] private GameObject pauseGameUI;
-    private void LoadPauseGameUI() =>
-       this.pauseGameUI = transform.Find("Pause_Game").gameObject;
-
     [SerializeField] private GameObject loseGameUI;
-    private void LoadLoseGameUI() =>
-        this.loseGameUI = transform.Find("Lose_Game").gameObject;
-
+   
     [SerializeField] private Text lenghtText;
-    private void LoadLengthText() =>
-        this.lenghtText = transform.Find("Game").Find("Length_Text").GetComponent<Text>();
-
     [SerializeField] private float heightScaleBox;
-    private void LoadHeightScaleBox() =>
-        this.heightScaleBox = transform.Find("Game").Find("Deep").Find("Scale_Box_Height_1").GetComponent<RectTransform>().rect.height;
-
     [SerializeField] private RectTransform pointDeepPresent;
-    private void LoadPointDeepPresent() =>
-        this.pointDeepPresent = transform.Find("Game").Find("Deep").Find("Point_Present").GetComponent<RectTransform>();
 
     [SerializeField] private RectTransform pointDeepMax;
-    private void LoadPointDeepMax() =>
-        this.pointDeepMax = transform.Find("Game").Find("Deep").Find("Point_Max").GetComponent<RectTransform>();
+    /*End predicatedload of components*/
 
     protected override void LoadComponent()
     {
-        base.LoadComponent();
-        this.LoadLengthText();
-        this.LoadLoseGameUI();
-        this.LoadPauseGameUI();
-        this.LoadHeightScaleBox();
-        this.LoadPointDeepPresent();
-        this.LoadPointDeepMax();
+        predicateLoad.Clear();
+        predicateLoad = new List<Action> 
+        {
+            () => this.pauseGameUI = transform.Find("Pause_Game").gameObject,
+            () => this.loseGameUI = transform.Find("Lose_Game").gameObject,
+
+            () => this.lenghtText = transform.Find("Game").Find("Length_Text").GetComponent<Text>(),
+            () => this.heightScaleBox = transform.Find("Game").Find("Deep").Find("Scale_Box_Height_1").GetComponent<RectTransform>().rect.height,
+
+            () => this.pointDeepPresent = transform.Find("Game").Find("Deep").Find("Point_Present").GetComponent<RectTransform>(),
+            () => this.pointDeepMax = transform.Find("Game").Find("Deep").Find("Point_Max").GetComponent<RectTransform>()
+        };
+
+        foreach (var predicate in predicateLoad)
+            predicate?.Invoke();
     }
 
     protected override void LoadComponentInAwakeBefore()

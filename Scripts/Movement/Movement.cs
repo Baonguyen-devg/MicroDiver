@@ -2,13 +2,13 @@ using UnityEngine;
 
 public abstract class Movement : AutoMonoBehaviour
 {
-    protected const float default_Speed = 1f;
-    protected const float default_Maximum_Speed = 10;
-    protected const float default_Minimum_Speed = 0.01f;
+    protected const float DEFAULT_SPEED = 1f;
+    protected const float DEFAULT_MAXIMUM_SPEED = 10;
+    protected const float DEFAULT_MINIMUM_SPEED = 0.01f;
 
-    [SerializeField] protected float speed = default_Speed;
-    [SerializeField] protected float maximumSpeed = default_Maximum_Speed;
-    [SerializeField] protected float minimumSpeed = default_Minimum_Speed;
+    [SerializeField] protected float speed = DEFAULT_SPEED;
+    [SerializeField] protected float maximumSpeed = DEFAULT_MAXIMUM_SPEED;
+    [SerializeField] protected float minimumSpeed = DEFAULT_MINIMUM_SPEED;
 
     [SerializeField] protected bool isMovingFast = false;
 

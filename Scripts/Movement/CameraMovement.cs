@@ -1,36 +1,39 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraMovement : Movement
 {
-    private const float default_Distance_Stop = 5f;
-    [SerializeField] private float distanceStop = default_Distance_Stop;
+    private const float DEFAULT_DISTANCE_STOP = 5f;
+    [SerializeField] private float distanceStop = DEFAULT_DISTANCE_STOP;
+
+    /*Begin predicatedload of components*/
+    [SerializeField] private List<Action> predicateLoad;
 
     [SerializeField] private Transform headPlayer;
-    private void LoadPlayer() =>
-        this.headPlayer = GameObject.Find("Player").transform.Find("Model")?.Find("Head");
-
     [SerializeField] private Transform bottomSea;
-    private void LoadBottomSea() =>
-        this.bottomSea = GameObject.Find("Background")?.transform.Find("Bottom_Sea")?.transform;
+    /*End predicatedload of components*/
 
     protected override void LoadComponent()
     {
         base.LoadComponent();
-        this.LoadPlayer();
-        this.LoadBottomSea();
+        predicateLoad.Clear();
+        predicateLoad = new List<Action>
+        {
+            () => this.headPlayer = GameObject.Find("Player")?.transform.Find("Model")?.Find("Head"),
+            () => this.bottomSea = GameObject.Find("Background")?.transform.Find("Bottom_Sea")?.transform
+        };
+
+        foreach (var predicate in predicateLoad)
+            predicate?.Invoke();
     }
 
     protected override void Move()
     {
-        if (!this.CanMove()) return;
+        Predicate<float> predicate = (x) => x > 0 || x <= this.bottomSea.localPosition.y + this.distanceStop;
+        if (predicate.Invoke(this.headPlayer.localPosition.y)) return;
+
         Vector3 pos = new Vector3(transform.localPosition.x, this.headPlayer.localPosition.y, -10);;
         transform.parent.position = Vector3.MoveTowards(transform.position, pos, this.speed);
-    }
-
-    private bool CanMove()
-    {
-        if (this.headPlayer.localPosition.y >= 0) return false;
-        if (this.headPlayer.localPosition.y <= this.bottomSea.localPosition.y + this.distanceStop) return false;
-        return true;
     }
 }
