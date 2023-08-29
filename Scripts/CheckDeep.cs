@@ -1,19 +1,17 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CheckDeep : AutoMonoBehaviour
 {
-    [SerializeField] private float rateDeep = default;
     [SerializeField] private int maxDeep = default;
 
-    [SerializeField] protected Transform bottomSea;
-    protected virtual void LoadBottomSea() =>
+    [SerializeField] private Transform bottomSea;
+    private void LoadBottomSea() =>
         this.bottomSea = GameObject.Find("Background")?.transform.Find("Bottom_Sea")?.transform;
 
     [SerializeField] private float firstDeep = default;
     [SerializeField] private List<Transform> listModel;
-    protected virtual void LoadHeadPlayer() =>
+    private void LoadHeadPlayer() =>
         this.listModel = transform.parent.Find("Model")?.GetComponent<ListPrefab>().Prefabs;
 
     protected override void LoadComponent()

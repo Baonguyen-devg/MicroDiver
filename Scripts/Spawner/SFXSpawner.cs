@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SFXSpawner : Spawner
 {
-    [SerializeField] protected static SFXSpawner instance;
+    private static SFXSpawner instance;
     public static SFXSpawner Instance => instance;
 
     protected override void LoadComponentInAwakeBefore()

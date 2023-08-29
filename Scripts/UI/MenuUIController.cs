@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -13,13 +11,13 @@ public class MenuUIController : AutoMonoBehaviour
 
     public virtual void PlayGame()
     {
-        this.clickAudio.Play();
+        this.PlayClickAudio();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     public virtual void QuitGame()
     {
-        this.clickAudio.Play();
+        this.PlayClickAudio();
         Application.Quit();
     }
 

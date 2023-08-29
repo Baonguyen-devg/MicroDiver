@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DespawnerByTime : Despawner
@@ -7,11 +5,7 @@ public class DespawnerByTime : Despawner
     [SerializeField] protected float timeDespawn = 2f;
     [SerializeField] protected float timeStartSpawn;
 
-    protected override void OnEnable()
-    {
-        base.OnEnable();
-        this.timeStartSpawn = 0;
-    }
+    protected override void OnEnable() => this.timeStartSpawn = 0;
 
     public override void DespawnObject()
     {

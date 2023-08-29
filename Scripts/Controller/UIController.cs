@@ -1,13 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
-public class UIController : AutoMonoBehaviour
+public partial class UIController : AutoMonoBehaviour
 {
     private static UIController instance;
     public static UIController Instance => instance;
+
+    private float rateDeep = default;
+    public float RateDeep => this.rateDeep;
 
     [SerializeField] private GameObject pauseGameUI;
     private void LoadPauseGameUI() =>
@@ -21,9 +21,7 @@ public class UIController : AutoMonoBehaviour
     private void LoadLengthText() =>
         this.lenghtText = transform.Find("Game").Find("Length_Text").GetComponent<Text>();
 
-    public float rateDeep = default;
-
-    [SerializeField] private float heightScaleBox = default;
+    [SerializeField] private float heightScaleBox;
     private void LoadHeightScaleBox() =>
         this.heightScaleBox = transform.Find("Game").Find("Deep").Find("Scale_Box_Height_1").GetComponent<RectTransform>().rect.height;
 
@@ -46,53 +44,10 @@ public class UIController : AutoMonoBehaviour
         this.LoadPointDeepMax();
     }
 
-    private void Update()
-    {
-        if (Input.GetKey(KeyCode.Escape)) this.Pause();
-    }
-
     protected override void LoadComponentInAwakeBefore()
     {
         base.LoadComponentInAwakeBefore();
         UIController.instance = this;
     }
-
-    public virtual void ChangeDeep(float rateDeep)
-    {
-        this.rateDeep = rateDeep;
-        Vector2 newPositon = this.pointDeepPresent.anchoredPosition;
-        newPositon.y = -rateDeep * this.heightScaleBox;
-        this.pointDeepPresent.anchoredPosition = newPositon;
-
-        Vector2 newMaxPositon = this.pointDeepMax.anchoredPosition;
-        newMaxPositon.y = - GameController.Instance.MaxDeepPresent * this.heightScaleBox;
-        this.pointDeepMax.anchoredPosition = newMaxPositon;
-    }
-
-    public virtual void ChangeLengthText(string textNumber) => 
-        this.lenghtText.text = textNumber;
-
-    public virtual void Pause() {
-        this.pauseGameUI.SetActive(true);
-        Time.timeScale = 0;
-    }
-
-    public virtual void Lose() => this.loseGameUI.SetActive(true);
-
-    public virtual void Continue() => Time.timeScale = 1;
-
-    public virtual void PlayAgain()
-    {
-        Time.timeScale = 1;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
-
-    public virtual void Menu()
-    {
-        Time.timeScale = 1;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
-    }
-
-    public virtual void PlayClickAudio() => SFXSpawner.Instance.PlaySound("Click_Button_Audio");
 }
 

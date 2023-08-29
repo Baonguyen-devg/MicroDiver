@@ -1,18 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class InputController : AutoMonoBehaviour
+public partial class InputController : AutoMonoBehaviour
 {
     private static InputController instance;
     public static InputController Instance => instance;
 
-    protected override void LoadComponentInAwakeAfter()
+    protected override void LoadComponentInAwakeBefore()
     {
-        base.LoadComponentInAwakeAfter();
+        base.LoadComponentInAwakeBefore();
         InputController.instance = this;
     }
 
     public virtual Vector3 GetMousePosition() => 
-        Camera.main.ScreenToWorldPoint(Input.mousePosition);      
+        Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+    public virtual bool GetkeyEscape() =>
+        Input.GetKey(KeyCode.Escape);
 }

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,7 +6,7 @@ public class PlayerMovement : Movement
     private const float default_Distance_Body = 1f;
 
     [SerializeField] private List<Transform> listModel;
-    protected virtual void LoadHeadPlayer() =>
+    private void LoadHeadPlayer() =>
         this.listModel = transform.parent.Find("Model")?.GetComponent<ListPrefab>().Prefabs;
 
     [SerializeField] private float distanceBody = default_Distance_Body;
@@ -28,7 +27,7 @@ public class PlayerMovement : Movement
         }
     }
 
-    protected virtual void LookAtTarget(Vector3 direction, Transform objectMove)
+    private void LookAtTarget(Vector3 direction, Transform objectMove)
     {
         Vector3 diff = direction - objectMove.position;
         diff.Normalize();
@@ -36,7 +35,7 @@ public class PlayerMovement : Movement
         objectMove.rotation = Quaternion.Euler(0f, 0f, rotZ - 90);
     }
 
-    protected virtual void Move(Transform objectMove, Vector3 target)
+    private void Move(Transform objectMove, Vector3 target)
     {
         if (Vector3.Distance(objectMove.position, target) <= this.distanceBody) this.speed = 0.015f;
         else this.speed = 0.04f;

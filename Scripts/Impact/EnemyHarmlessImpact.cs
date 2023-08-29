@@ -1,16 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyHarmlessImpact : EnemyImpact
 {
-    [SerializeField] private int numberIncrease = 1;
+    private const int default_Number_Increase = 1;
+    [SerializeField] private int numberIncrease = default_Number_Increase;
 
     protected override void Affect(Transform objectAffect)
     {
+        GameController.Instance.EatHarmlessEnemy();
         for (int i = 1; i <= this.numberIncrease; i++)
             GameController.Instance.IncreaseLength(1);
-
-        SFXSpawner.Instance.PlaySound("Swallow_Audio");
     }
 }

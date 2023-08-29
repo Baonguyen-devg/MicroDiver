@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,7 +7,7 @@ public class IncreaseBody : AutoMonoBehaviour
     public static IncreaseBody Instance => instance;
 
     [SerializeField] private List<Transform> bodyPrefabs;
-    protected virtual void LoadBodyPrefabs() =>
+    private void LoadBodyPrefabs() =>
         this.bodyPrefabs = gameObject.GetComponent<ListPrefab>().Prefabs;
 
     protected override void LoadComponent() => this.LoadBodyPrefabs();
