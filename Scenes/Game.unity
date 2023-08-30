@@ -1173,9 +1173,9 @@ MonoBehaviour:
   maximumSpeed: 10
   minimumSpeed: 0.01
   isMovingFast: 0
+  distanceStop: 3
   headPlayer: {fileID: 742104427}
   bottomSea: {fileID: 2071214415}
-  distanceStop: 3
 --- !u!1 &394422854
 GameObject:
   m_ObjectHideFlags: 0
@@ -1185,6 +1185,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 394422855}
+  - component: {fileID: 394422856}
   m_Layer: 0
   m_Name: Game_Controller
   m_TagString: Untagged
@@ -1207,6 +1208,20 @@ Transform:
   m_Father: {fileID: 1553691128}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &394422856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 394422854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76e9361dcef3aed4894a7dab74e592ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxDeepPresent: 0
+  lengthPresent: 0
 --- !u!1 &413045825
 GameObject:
   m_ObjectHideFlags: 0
@@ -13515,7 +13530,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7a20d2a78b06724ea67ee9d7e759240, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rateDeep: 0
   pauseGameUI: {fileID: 1773907879}
   loseGameUI: {fileID: 885314163}
   lenghtText: {fileID: 3523642}
@@ -18623,7 +18637,6 @@ GameObject:
   - component: {fileID: 1475105603}
   - component: {fileID: 1475105606}
   - component: {fileID: 1475105605}
-  - component: {fileID: 1475105604}
   m_Layer: 3
   m_Name: Impact
   m_TagString: Untagged
@@ -18646,20 +18659,6 @@ Transform:
   m_Father: {fileID: 742104427}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1475105604
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1475105602}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 154cae03ac2873d4e9937489f419e7a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rigid2D: {fileID: 1475105606}
-  colli2D: {fileID: 1475105605}
 --- !u!61 &1475105605
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -34390,10 +34389,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a63f5a982a209f48b9591d71b9acf05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rateDeep: 5
   maxDeep: 0
-  bottomSea: {fileID: 0}
   firstDeep: 0
+  bottomSea: {fileID: 0}
   listModel: []
 --- !u!1 &1889965631
 GameObject:

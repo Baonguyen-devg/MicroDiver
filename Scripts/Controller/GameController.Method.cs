@@ -5,7 +5,8 @@ public partial class GameController : AutoMonoBehaviour
 {
     private void Update()
     {
-        if (InputController.Instance.GetkeyEscape()) this.PauseGame();
+        if (InputController.Instance.GetkeyEscape())
+            this.GetKeyEscape?.Invoke();
     }
 
     public virtual void IncreaseLength(int number)

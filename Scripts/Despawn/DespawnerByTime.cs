@@ -9,11 +9,8 @@ public class DespawnerByTime : Despawner
 
     protected override void OnEnable() => this.timeStartSpawn = default;
 
-    public override void DespawnObject()
-    {
-        base.DespawnObject();
-        EnemySpawner.Instance.Despawn(transform.parent);
-    }
+    public override void DespawnObject() =>
+         EnemySpawner.Instance.Despawn(transform.parent);
 
     protected override bool CanDespawn()
     {

@@ -16,7 +16,6 @@ public partial class PlayerController : AutoMonoBehaviour
 
     protected override void LoadComponent()
     {
-        predicateLoad.Clear();
         predicateLoad = new List<Action>
         {
             () => this.model = transform.Find("Model"),

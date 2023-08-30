@@ -1,23 +1,29 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CheckDeep : AutoMonoBehaviour
 {
     [SerializeField] private int maxDeep = default;
+    [SerializeField] private float firstDeep = default;
+
+    /*Begin predicatedload of components*/
+    [SerializeField] private List<Action> predicateLoad;
 
     [SerializeField] private Transform bottomSea;
-    private void LoadBottomSea() =>
-        this.bottomSea = GameObject.Find("Background")?.transform.Find("Bottom_Sea")?.transform;
-
-    [SerializeField] private float firstDeep = default;
     [SerializeField] private List<Transform> listModel;
-    private void LoadHeadPlayer() =>
-        this.listModel = transform.parent.Find("Model")?.GetComponent<ListPrefab>().Prefabs;
+    /*End predicatedload of components*/
 
     protected override void LoadComponent()
     {
-        this.LoadBottomSea();
-        this.LoadHeadPlayer();
+        predicateLoad = new List<Action>
+        {
+            () => this.bottomSea = GameObject.Find("Background")?.transform.Find("Bottom_Sea")?.transform,
+            () => this.listModel = transform.parent.Find("Model")?.GetComponent<ListPrefab>().Prefabs
+        };
+
+        foreach (var predicate in predicateLoad)
+            predicate?.Invoke();
     }
  
     protected override void LoadComponentInAwakeBefore()

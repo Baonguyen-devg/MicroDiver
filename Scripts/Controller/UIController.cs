@@ -28,7 +28,6 @@ public partial class UIController : AutoMonoBehaviour
 
     protected override void LoadComponent()
     {
-        predicateLoad.Clear();
         predicateLoad = new List<Action> 
         {
             () => this.pauseGameUI = transform.Find("Pause_Game").gameObject,

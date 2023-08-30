@@ -14,6 +14,9 @@ public partial class GameController : AutoMonoBehaviour
 
     [SerializeField] private int lengthPresent = default;
 
+    private delegate void GetKeyEscapeHandler();
+    private event GetKeyEscapeHandler GetKeyEscape;
+
     protected override void LoadComponent() => this.LoadSubjectPointEnemySpawner();
 
     protected override void LoadComponentInAwakeBefore()
@@ -21,5 +24,6 @@ public partial class GameController : AutoMonoBehaviour
         base.LoadComponentInAwakeBefore();
         GameController.instance = this;
         Application.targetFrameRate = 60;
+        this.GetKeyEscape += this.PauseGame;
     }
 }
